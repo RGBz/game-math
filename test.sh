@@ -1,2 +1,8 @@
 #!/bin/sh
-deno test --import-map import-map.json --watch
+rm -rf coverage/*
+deno test \
+  --import-map import-map.json \
+  --coverage=coverage/profile
+deno coverage coverage/profile \
+  --exclude=src/testing.ts \
+  --lcov > coverage/lcov.info

@@ -1,6 +1,19 @@
-import { assertEquals } from "testing/asserts.ts";
-import { assertKindaEquals } from "./util.ts";
+import { assert, assertEquals } from "testing/asserts.ts";
+import { Matrix2 } from "./Matrix2.ts";
+import { assertKindaEquals } from "./testing.ts";
 import { Vec2 } from "./Vec2.ts";
+
+Deno.test("a vector's size is equal to the number of components it has", () => {
+  assertEquals(Vec2.zero.size, 2);
+});
+
+Deno.test("a vector equals another when their components match", () => {
+  const v = new Vec2(3, 4);
+  const w = new Vec2(3, 4);
+  const u = new Vec2(6, 7);
+  assert(v.equals(w));
+  assert(!v.equals(u));
+});
 
 Deno.test("the zero vector should have 0 for both x and y components", () => {
   const zero = Vec2.zero;
@@ -74,4 +87,26 @@ Deno.test("Mutating a vector by subtracting another from it should update the ve
   v.subtractMut(w);
   assertEquals(v.x, -2);
   assertEquals(v.y, -2);
+});
+
+Deno.test("multiplying by a matrix results in a new vector that is the linear combination of the columns of the matrix and the components of the vector", () => {
+  const v = new Vec2(3, 4);
+  const m = Matrix2.fromRows(
+    new Vec2(2, 0),
+    new Vec2(0, 3),
+  );
+  const mv = v.multiply(m);
+  assertEquals(mv.x, 6);
+  assertEquals(mv.y, 12);
+});
+
+Deno.test("mutating a vector by a matrix results the vector being a linear combination of the columns of the matrix and the components of the vector", () => {
+  const v = new Vec2(3, 4);
+  const m = Matrix2.fromRows(
+    new Vec2(2, 0),
+    new Vec2(0, 3),
+  );
+  v.multiplyMut(m);
+  assertEquals(v.x, 6);
+  assertEquals(v.y, 12);
 });

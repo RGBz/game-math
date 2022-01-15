@@ -1,7 +1,10 @@
+import { Matrix2 } from "./Matrix2.ts";
+import { Vec } from "./Vec.ts";
+
 /**
  * A vector in 2 dimensions
  */
-export class Vec2 {
+export class Vec2 implements Vec<Vec2> {
   /**
    * Get a new vector whose components are all 0 (AKA at the origin)
    */
@@ -12,11 +15,24 @@ export class Vec2 {
   constructor(public x: number, public y: number) {}
 
   /**
+   * Get the number of components in the vector (it's always 2)
+   */
+  get size(): number {
+    return 2;
+  }
+
+  /**
+   * Confirm all components are identical between this vector and another
+   */
+  equals(other: Vec2): boolean {
+    return this.x === other.x && this.y === other.y;
+  }
+
+  /**
    * Square of the magnitude (length of the vector)
    */
   get magnitudeSquared(): number {
-    const { x, y } = this;
-    return x * x + y * y;
+    return this.dot(this);
   }
 
   /**
@@ -79,6 +95,33 @@ export class Vec2 {
   subtractMut({ x, y }: Vec2): this {
     this.x -= x;
     this.y -= y;
+    return this;
+  }
+
+  /**
+   * Get the dot product of this vector and another
+   */
+  dot({ x: ox, y: oy }: Vec2): number {
+    const { x, y } = this;
+    return x * ox + y * oy;
+  }
+
+  /**
+   * Multiply this vector by a matrix
+   */
+  multiply({ c0, c1 }: Matrix2): Vec2 {
+    return new Vec2(
+      c0.dot(this),
+      c1.dot(this),
+    );
+  }
+
+  /**
+   * Mutate this vector by multiplying it by a matrix
+   */
+  multiplyMut({ c0, c1 }: Matrix2): Vec2 {
+    this.x = c0.dot(this);
+    this.y = c1.dot(this);
     return this;
   }
 }
