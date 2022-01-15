@@ -113,4 +113,19 @@ export class Matrix2 implements Matrix<Matrix2> {
     return this.c0.equals(other.c0) &&
       this.c1.equals(other.c1);
   }
+
+  multiply(other: Matrix2): Matrix2 {
+    const { c0, c1 } = this;
+    return Matrix2.fromColumns(
+      c0.multiply(other),
+      c1.multiply(other),
+    );
+  }
+
+  multiplyMut(other: Matrix2): this {
+    const { c0, c1 } = this;
+    c0.multiplyMut(other);
+    c1.multiplyMut(other);
+    return this;
+  }
 }

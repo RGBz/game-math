@@ -124,4 +124,21 @@ export class Matrix3 implements Matrix<Matrix3> {
       this.c1.equals(other.c1) &&
       this.c2.equals(other.c2);
   }
+
+  multiply(other: Matrix3): Matrix3 {
+    const { c0, c1, c2 } = this;
+    return Matrix3.fromColumns(
+      c0.multiply(other),
+      c1.multiply(other),
+      c2.multiply(other),
+    );
+  }
+
+  multiplyMut(other: Matrix3): this {
+    const { c0, c1, c2 } = this;
+    c0.multiplyMut(other);
+    c1.multiplyMut(other);
+    c2.multiplyMut(other);
+    return this;
+  }
 }

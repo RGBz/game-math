@@ -63,4 +63,14 @@ export interface Matrix<T extends Matrix<T>> {
    * Mutate this matrix by subtracting the entries of another matrix from the entries of this matrix
    */
   subtractMut(other: T): this;
+
+  /**
+   * Create a new matrix by multiplying this matrix by another
+   */
+  multiply(other: T): T;
+
+  /**
+   * Mutate this matrix to be the product of itself and another
+   */
+  multiplyMut(other: T): T;
 }

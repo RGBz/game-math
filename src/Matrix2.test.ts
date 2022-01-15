@@ -179,3 +179,26 @@ Deno.test("mutating a matrix by subtracting another from it results in the matri
   assertEquals(m.c1.x, -2);
   assertEquals(m.c1.y, 0);
 });
+
+Deno.test("multiplying a matrix by another results in a new matrix that is the product", () => {
+  const m = Matrix2.fromColumns(
+    new Vec2(1, 2),
+    new Vec2(4, 5),
+  ).multiply(Matrix2.identity);
+  assertEquals(m.c0.x, 1);
+  assertEquals(m.c0.y, 2);
+  assertEquals(m.c1.x, 4);
+  assertEquals(m.c1.y, 5);
+});
+
+Deno.test("mutating a matrix by multiplying with another results in this matrix being their product", () => {
+  const m = Matrix2.fromColumns(
+    new Vec2(1, 2),
+    new Vec2(4, 5),
+  );
+  m.multiplyMut(Matrix2.identity);
+  assertEquals(m.c0.x, 1);
+  assertEquals(m.c0.y, 2);
+  assertEquals(m.c1.x, 4);
+  assertEquals(m.c1.y, 5);
+});

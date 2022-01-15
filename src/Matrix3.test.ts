@@ -250,3 +250,38 @@ Deno.test("mutating a matrix by subtracting another from it results in the matri
   assertEquals(m.c2.y, 6);
   assertEquals(m.c2.z, 8);
 });
+
+Deno.test("multiplying a matrix by another results in a new matrix that is the product", () => {
+  const m = Matrix3.fromColumns(
+    new Vec3(1, 2, 3),
+    new Vec3(4, 5, 6),
+    new Vec3(7, 8, 9),
+  ).multiply(Matrix3.identity);
+  assertEquals(m.c0.x, 1);
+  assertEquals(m.c0.y, 2);
+  assertEquals(m.c0.z, 3);
+  assertEquals(m.c1.x, 4);
+  assertEquals(m.c1.y, 5);
+  assertEquals(m.c1.z, 6);
+  assertEquals(m.c2.x, 7);
+  assertEquals(m.c2.y, 8);
+  assertEquals(m.c2.z, 9);
+});
+
+Deno.test("mutating a matrix by multiplying with another results in this matrix being their product", () => {
+  const m = Matrix3.fromColumns(
+    new Vec3(1, 2, 3),
+    new Vec3(4, 5, 6),
+    new Vec3(7, 8, 9),
+  );
+  m.multiplyMut(Matrix3.identity);
+  assertEquals(m.c0.x, 1);
+  assertEquals(m.c0.y, 2);
+  assertEquals(m.c0.z, 3);
+  assertEquals(m.c1.x, 4);
+  assertEquals(m.c1.y, 5);
+  assertEquals(m.c1.z, 6);
+  assertEquals(m.c2.x, 7);
+  assertEquals(m.c2.y, 8);
+  assertEquals(m.c2.z, 9);
+});
