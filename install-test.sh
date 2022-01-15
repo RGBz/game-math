@@ -2,4 +2,4 @@
 
 deno cache \
   --import-map import-map.json \
-  src/**/*.test.ts 
+  src/*.test.ts 
