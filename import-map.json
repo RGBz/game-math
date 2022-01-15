@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "/": "./src/",
+    "./": "./",
+    "deno/": "https://deno.land/std@0.121.0/",
+    "testing/": "https://deno.land/std@0.121.0/testing/",
+    "fmt/": "https://deno.land/std@0.121.0/fmt/"
+  }
+}
