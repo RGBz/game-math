@@ -1,0 +1,35 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+    - 'src/**'
+    - '.github/**'
+    - '*.sh'
+    - import-map.json
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        deno-version: [1.17.3]
+
+    steps:
+      - name: Checkout Deno
+        uses: actions/checkout@v2
+      - name: Use Deno Version ${{ matrix.deno-version }}
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: ${{ matrix.deno-version }}
+      - name: Lint
+        run: ./lint.sh
+      - name: Install
+        run: ./install-test.sh
+      - name: Test
+        run: ./test.sh
+      
