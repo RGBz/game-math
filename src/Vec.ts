@@ -20,6 +20,21 @@ export interface Vec<T extends Vec<T>> {
   unit: T;
 
   /**
+   * This vector as an array
+   */
+  array: number[];
+
+  /**
+   * Does this vector equal another
+   */
+  equals(other: T): boolean;
+
+  /**
+   * Set the individual components of the vector
+   */
+  set(...components: number[]): this;
+
+  /**
    * The dot product of this vector and another
    */
   dot(other: T): number;

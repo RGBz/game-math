@@ -12,20 +12,16 @@ export class Vec2 implements Vec<Vec2> {
     return new Vec2(0, 0);
   }
 
+  /**
+   * Construct a 2D (x, y) vector
+   */
   constructor(public x: number, public y: number) {}
 
   /**
-   * Get the number of components in the vector (it's always 2)
+   * Get the number of components in the vector
    */
   get size(): number {
     return 2;
-  }
-
-  /**
-   * Confirm all components are identical between this vector and another
-   */
-  equals(other: Vec2): boolean {
-    return this.x === other.x && this.y === other.y;
   }
 
   /**
@@ -50,20 +46,40 @@ export class Vec2 implements Vec<Vec2> {
   }
 
   /**
+   * As the array [x, y]
+   */
+  get array(): [number, number] {
+    return [this.x, this.y];
+  }
+
+  /**
+   * Confirm all components are identical between this vector and another
+   */
+  equals(other: Vec2): boolean {
+    return this.x === other.x && this.y === other.y;
+  }
+
+  /**
+   * Set the individual (x, y) components
+   */
+  set(x: number, y: number): this {
+    this.x = x;
+    this.y = y;
+    return this;
+  }
+
+  /**
    * Create a new vector whose components are scaled by the scalar
    */
   scale(scalar: number): Vec2 {
-    const { x, y } = this;
-    return new Vec2(x * scalar, y * scalar);
+    return new Vec2(this.x * scalar, this.y * scalar);
   }
 
   /**
    * Mutate this vector's components to be scaled by the scalar
    */
   scaleMut(scalar: number): this {
-    this.x *= scalar;
-    this.y *= scalar;
-    return this;
+    return this.set(this.x * scalar, this.y * scalar);
   }
 
   /**
@@ -77,9 +93,7 @@ export class Vec2 implements Vec<Vec2> {
    * Mutate this new vector to be the sum of this vector and another
    */
   addMut({ x, y }: Vec2): this {
-    this.x += x;
-    this.y += y;
-    return this;
+    return this.set(this.x + x, this.y + y);
   }
 
   /**
@@ -93,35 +107,33 @@ export class Vec2 implements Vec<Vec2> {
    * Mutate this new vector to be the difference of this vector and another
    */
   subtractMut({ x, y }: Vec2): this {
-    this.x -= x;
-    this.y -= y;
-    return this;
+    return this.set(this.x - x, this.y - y);
   }
 
   /**
    * Get the dot product of this vector and another
    */
   dot({ x: ox, y: oy }: Vec2): number {
-    const { x, y } = this;
-    return x * ox + y * oy;
+    return this.x * ox + this.y * oy;
   }
 
   /**
    * Multiply this vector by a matrix
    */
-  multiply({ c0, c1 }: Matrix2): Vec2 {
+  multiply(m: Matrix2): Vec2 {
     return new Vec2(
-      c0.dot(this),
-      c1.dot(this),
+      m.r0c0 * this.x + m.r0c1 * this.y,
+      m.r1c0 * this.x + m.r1c1 * this.y,
     );
   }
 
   /**
    * Mutate this vector by multiplying it by a matrix
    */
-  multiplyMut({ c0, c1 }: Matrix2): Vec2 {
-    this.x = c0.dot(this);
-    this.y = c1.dot(this);
-    return this;
+  multiplyMut(m: Matrix2): Vec2 {
+    return this.set(
+      m.r0c0 * this.x + m.r0c1 * this.y,
+      m.r1c0 * this.x + m.r1c1 * this.y,
+    );
   }
 }

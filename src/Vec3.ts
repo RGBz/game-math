@@ -12,20 +12,16 @@ export class Vec3 implements Vec<Vec3> {
     return new Vec3(0, 0, 0);
   }
 
+  /**
+   * Construct a 3D vector (x, y, z)
+   */
   constructor(public x: number, public y: number, public z: number) {}
 
   /**
-   * Get the number of components in the vector (it's always 3)
+   * Get the number of components in the vector
    */
   get size(): number {
     return 3;
-  }
-
-  /**
-   * Confirm all components are identical between this vector and another
-   */
-  equals(other: Vec3): boolean {
-    return this.x === other.x && this.y === other.y && this.z === other.z;
   }
 
   /**
@@ -50,21 +46,41 @@ export class Vec3 implements Vec<Vec3> {
   }
 
   /**
+   * As an array [x, y, z]
+   */
+  get array(): [number, number, number] {
+    return [this.x, this.y, this.z];
+  }
+
+  /**
+   * Confirm all components are identical between this vector and another
+   */
+  equals(other: Vec3): boolean {
+    return this.x === other.x && this.y === other.y && this.z === other.z;
+  }
+
+  /**
+   * Set the individual (x, y, z) components
+   */
+  set(x: number, y: number, z: number): this {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    return this;
+  }
+
+  /**
    * Create a new vector whose components are scaled by the scalar
    */
   scale(scalar: number): Vec3 {
-    const { x, y, z } = this;
-    return new Vec3(x * scalar, y * scalar, z * scalar);
+    return new Vec3(this.x * scalar, this.y * scalar, this.z * scalar);
   }
 
   /**
    * Mutate this vector's components to be scaled by the scalar
    */
   scaleMut(scalar: number): this {
-    this.x *= scalar;
-    this.y *= scalar;
-    this.z *= scalar;
-    return this;
+    return this.set(this.x * scalar, this.y * scalar, this.z * scalar);
   }
 
   /**
@@ -78,10 +94,7 @@ export class Vec3 implements Vec<Vec3> {
    * Mutate this new vector to be the sum of this vector and another
    */
   addMut({ x, y, z }: Vec3): this {
-    this.x += x;
-    this.y += y;
-    this.z += z;
-    return this;
+    return this.set(this.x + x, this.y + y, this.z + z);
   }
 
   /**
@@ -95,38 +108,35 @@ export class Vec3 implements Vec<Vec3> {
    * Mutate this new vector to be the difference of this vector and another
    */
   subtractMut({ x, y, z }: Vec3): this {
-    this.x -= x;
-    this.y -= y;
-    this.z -= z;
-    return this;
+    return this.set(this.x - x, this.y - y, this.z - z);
   }
 
   /**
    * Get the dot product of this vector and another
    */
   dot({ x: ox, y: oy, z: oz }: Vec3): number {
-    const { x, y, z } = this;
-    return x * ox + y * oy + z * oz;
+    return this.x * ox + this.y * oy + this.z * oz;
   }
 
   /**
    * Multiply this vector by a matrix
    */
-  multiply({ c0, c1, c2 }: Matrix3): Vec3 {
+  multiply(m: Matrix3): Vec3 {
     return new Vec3(
-      c0.dot(this),
-      c1.dot(this),
-      c2.dot(this),
+      m.r0c0 * this.x + m.r0c1 * this.y + m.r0c2 * this.z,
+      m.r1c0 * this.x + m.r1c1 * this.y + m.r1c2 * this.z,
+      m.r2c0 * this.x + m.r2c1 * this.y + m.r2c2 * this.z,
     );
   }
 
   /**
    * Mutate this vector by multiplying it by a matrix
    */
-  multiplyMut({ c0, c1, c2 }: Matrix3): Vec3 {
-    this.x = c0.dot(this);
-    this.y = c1.dot(this);
-    this.z = c2.dot(this);
-    return this;
+  multiplyMut(m: Matrix3): Vec3 {
+    return this.set(
+      m.r0c0 * this.x + m.r0c1 * this.y + m.r0c2 * this.z,
+      m.r1c0 * this.x + m.r1c1 * this.y + m.r1c2 * this.z,
+      m.r2c0 * this.x + m.r2c1 * this.y + m.r2c2 * this.z,
+    );
   }
 }

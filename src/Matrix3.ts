@@ -1,53 +1,125 @@
 import { Matrix } from "./Matrix.ts";
-import { Vec3 } from "./Vec3.ts";
 
 export class Matrix3 implements Matrix<Matrix3> {
+  /**
+   * Create zero matrix (all entries are 0)
+   */
   static get zero(): Matrix3 {
-    return new Matrix3(Vec3.zero, Vec3.zero, Vec3.zero);
+    return new Matrix3(
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    );
   }
 
+  /**
+   * Create an identity matrix (multiplying by it gives you the original matrix)
+   */
   static get identity(): Matrix3 {
     return new Matrix3(
-      new Vec3(1, 0, 0),
-      new Vec3(0, 1, 0),
-      new Vec3(0, 0, 1),
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
     );
   }
 
-  static fromRows(r0: Vec3, r1: Vec3, r2: Vec3): Matrix3 {
+  /**
+   * Construct a matrix from row arrays
+   */
+  static fromRows(
+    r0: [number, number, number],
+    r1: [number, number, number],
+    r2: [number, number, number],
+  ): Matrix3 {
     return new Matrix3(
-      new Vec3(r0.x, r1.x, r2.x),
-      new Vec3(r0.y, r1.y, r2.y),
-      new Vec3(r0.z, r1.z, r2.z),
+      r0[0],
+      r0[1],
+      r0[2],
+      r1[0],
+      r1[1],
+      r1[2],
+      r2[0],
+      r2[1],
+      r2[2],
     );
   }
 
-  static fromColumns(c0: Vec3, c1: Vec3, c2: Vec3): Matrix3 {
-    return new Matrix3(c0, c1, c2);
+  /**
+   * Construct a matrix from column arrays
+   */
+  static fromColumns(
+    c0: [number, number, number],
+    c1: [number, number, number],
+    c2: [number, number, number],
+  ): Matrix3 {
+    return new Matrix3(
+      c0[0],
+      c1[0],
+      c2[0],
+      c0[1],
+      c1[1],
+      c2[1],
+      c0[2],
+      c1[2],
+      c2[2],
+    );
   }
 
-  private constructor(
-    public c0: Vec3,
-    public c1: Vec3,
-    public c2: Vec3,
+  /**
+   * Construct a row-based matrix
+   */
+  constructor(
+    public r0c0: number,
+    public r0c1: number,
+    public r0c2: number,
+    public r1c0: number,
+    public r1c1: number,
+    public r1c2: number,
+    public r2c0: number,
+    public r2c1: number,
+    public r2c2: number,
   ) {}
 
+  /**
+   * The number of rows in the matrix
+   */
   get rowCount(): number {
     return 3;
   }
 
+  /**
+   * The number of columns in the matrix
+   */
   get columnCount(): number {
     return 3;
   }
 
+  /**
+   * Are the number of rows equal to the number of columns?
+   */
   get isSquare(): boolean {
     return true;
   }
 
+  /**
+   * Are all of the entries off of the main diagonal equal to 0?
+   */
   get isDiagonal(): boolean {
-    const { c0, c1, c2 } = this;
-    return c0.y === 0 && c0.z === 0 && c1.x === 0 && c1.z === 0 && c2.x === 0 &&
-      c2.y === 0;
+    return this.r0c1 === 0 && this.r0c2 === 0 &&
+      this.r1c0 === 0 && this.r1c2 === 0 &&
+      this.r2c0 === 0 && this.r2c1 === 0;
   }
 
   /**
@@ -68,77 +140,193 @@ export class Matrix3 implements Matrix<Matrix3> {
    * Create a new matrix whose rows are the columns from this matrix
    */
   get transpose(): Matrix3 {
-    const { c0, c1, c2 } = this;
-    return Matrix3.fromRows(c0, c1, c2);
-  }
-
-  scale(scalar: number): Matrix3 {
-    const { c0, c1, c2 } = this;
-    return Matrix3.fromColumns(
-      c0.scale(scalar),
-      c1.scale(scalar),
-      c2.scale(scalar),
+    return new Matrix3(
+      this.r0c0,
+      this.r1c0,
+      this.r2c0,
+      this.r0c1,
+      this.r1c1,
+      this.r2c1,
+      this.r0c2,
+      this.r1c2,
+      this.r2c2,
     );
   }
 
-  scaleMut(scalar: number): this {
-    const { c0, c1, c2 } = this;
-    c0.scaleMut(scalar);
-    c1.scaleMut(scalar);
-    c2.scaleMut(scalar);
-    return this;
-  }
-
-  add(other: Matrix3): Matrix3 {
-    return Matrix3.fromColumns(
-      this.c0.add(other.c0),
-      this.c1.add(other.c1),
-      this.c2.add(other.c2),
-    );
-  }
-
-  addMut(other: Matrix3): this {
-    this.c0.addMut(other.c0);
-    this.c1.addMut(other.c1);
-    this.c2.addMut(other.c2);
-    return this;
-  }
-
-  subtract(other: Matrix3): Matrix3 {
-    return Matrix3.fromColumns(
-      this.c0.subtract(other.c0),
-      this.c1.subtract(other.c1),
-      this.c2.subtract(other.c2),
-    );
-  }
-
-  subtractMut(other: Matrix3): this {
-    this.c0.subtractMut(other.c0);
-    this.c1.subtractMut(other.c1);
-    this.c2.subtractMut(other.c2);
-    return this;
-  }
-
+  /**
+   * Does this matrix equal another?
+   */
   equals(other: Matrix3): boolean {
-    return this.c0.equals(other.c0) &&
-      this.c1.equals(other.c1) &&
-      this.c2.equals(other.c2);
+    return this.r0c0 === other.r0c0 &&
+      this.r0c1 === other.r0c1 &&
+      this.r0c2 === other.r0c2 &&
+      this.r1c0 === other.r1c0 &&
+      this.r1c1 === other.r1c1 &&
+      this.r1c2 === other.r1c2 &&
+      this.r2c0 === other.r2c0 &&
+      this.r2c1 === other.r2c1 &&
+      this.r2c2 === other.r2c2;
   }
 
-  multiply(other: Matrix3): Matrix3 {
-    const { c0, c1, c2 } = this;
-    return Matrix3.fromColumns(
-      c0.multiply(other),
-      c1.multiply(other),
-      c2.multiply(other),
+  /**
+   * Set the individual, row-based entries for this matrix
+   */
+  set(
+    r0c0: number,
+    r0c1: number,
+    r0c2: number,
+    r1c0: number,
+    r1c1: number,
+    r1c2: number,
+    r2c0: number,
+    r2c1: number,
+    r2c2: number,
+  ): this {
+    this.r0c0 = r0c0;
+    this.r0c1 = r0c1;
+    this.r0c2 = r0c2;
+    this.r1c0 = r1c0;
+    this.r1c1 = r1c1;
+    this.r1c2 = r1c2;
+    this.r2c0 = r2c0;
+    this.r2c1 = r2c1;
+    this.r2c2 = r2c2;
+    return this;
+  }
+
+  /**
+   * Create a new matrix whose entries scaled by a scalar
+   */
+  scale(scalar: number): Matrix3 {
+    return new Matrix3(
+      this.r0c0 * scalar,
+      this.r0c1 * scalar,
+      this.r0c2 * scalar,
+      this.r1c0 * scalar,
+      this.r1c1 * scalar,
+      this.r1c2 * scalar,
+      this.r2c0 * scalar,
+      this.r2c1 * scalar,
+      this.r2c2 * scalar,
     );
   }
 
+  /**
+   * Mutate this matrix by scaling each of its entries by a scalar
+   */
+  scaleMut(scalar: number): this {
+    return this.set(
+      this.r0c0 * scalar,
+      this.r0c1 * scalar,
+      this.r0c2 * scalar,
+      this.r1c0 * scalar,
+      this.r1c1 * scalar,
+      this.r1c2 * scalar,
+      this.r2c0 * scalar,
+      this.r2c1 * scalar,
+      this.r2c2 * scalar,
+    );
+  }
+
+  /**
+   * Create a new matrix whose entries are the sum of this matrix and another
+   */
+  add(other: Matrix3): Matrix3 {
+    return new Matrix3(
+      this.r0c0 + other.r0c0,
+      this.r0c1 + other.r0c1,
+      this.r0c2 + other.r0c2,
+      this.r1c0 + other.r1c0,
+      this.r1c1 + other.r1c1,
+      this.r1c2 + other.r1c2,
+      this.r2c0 + other.r2c0,
+      this.r2c1 + other.r2c1,
+      this.r2c2 + other.r2c2,
+    );
+  }
+
+  /**
+   * Mutate this matrix by summing its entries with the entries of another matrix
+   */
+  addMut(other: Matrix3): this {
+    return this.set(
+      this.r0c0 + other.r0c0,
+      this.r0c1 + other.r0c1,
+      this.r0c2 + other.r0c2,
+      this.r1c0 + other.r1c0,
+      this.r1c1 + other.r1c1,
+      this.r1c2 + other.r1c2,
+      this.r2c0 + other.r2c0,
+      this.r2c1 + other.r2c1,
+      this.r2c2 + other.r2c2,
+    );
+  }
+
+  /**
+   * Create a new matrix whose entries are the difference of this matrix and another
+   */
+  subtract(other: Matrix3): Matrix3 {
+    return new Matrix3(
+      this.r0c0 - other.r0c0,
+      this.r0c1 - other.r0c1,
+      this.r0c2 - other.r0c2,
+      this.r1c0 - other.r1c0,
+      this.r1c1 - other.r1c1,
+      this.r1c2 - other.r1c2,
+      this.r2c0 - other.r2c0,
+      this.r2c1 - other.r2c1,
+      this.r2c2 - other.r2c2,
+    );
+  }
+
+  /**
+   * Mutate this matrix by subtracting the entries of another matrix from the entries of this matrix
+   */
+  subtractMut(other: Matrix3): this {
+    return this.set(
+      this.r0c0 - other.r0c0,
+      this.r0c1 - other.r0c1,
+      this.r0c2 - other.r0c2,
+      this.r1c0 - other.r1c0,
+      this.r1c1 - other.r1c1,
+      this.r1c2 - other.r1c2,
+      this.r2c0 - other.r2c0,
+      this.r2c1 - other.r2c1,
+      this.r2c2 - other.r2c2,
+    );
+  }
+
+  /**
+   * Create a new matrix by multiplying this matrix by another
+   */
+  multiply(other: Matrix3): Matrix3 {
+    return new Matrix3(
+      this.r0c0 * other.r0c0 + this.r0c1 * other.r1c0 + this.r0c2 * other.r2c0,
+      this.r0c0 * other.r0c1 + this.r0c1 * other.r1c1 + this.r0c2 * other.r2c1,
+      this.r0c0 * other.r0c2 + this.r0c1 * other.r1c2 + this.r0c2 * other.r2c2,
+      this.r1c0 * other.r0c0 + this.r1c1 * other.r1c0 + this.r1c2 * other.r2c0,
+      this.r1c0 * other.r0c1 + this.r1c1 * other.r1c1 + this.r1c2 * other.r2c1,
+      this.r1c0 * other.r0c2 + this.r1c1 * other.r1c2 + this.r1c2 * other.r2c2,
+      this.r2c0 * other.r0c0 + this.r2c1 * other.r1c0 + this.r2c2 * other.r2c0,
+      this.r2c0 * other.r0c1 + this.r2c1 * other.r1c1 + this.r2c2 * other.r2c1,
+      this.r2c0 * other.r0c2 + this.r2c1 * other.r1c2 + this.r2c2 * other.r2c2,
+    );
+  }
+
+  /**
+   * Mutate this matrix to be the product of itself and another
+   */
   multiplyMut(other: Matrix3): this {
-    const { c0, c1, c2 } = this;
-    c0.multiplyMut(other);
-    c1.multiplyMut(other);
-    c2.multiplyMut(other);
-    return this;
+    return this.set(
+      this.r0c0 * other.r0c0 + this.r0c1 * other.r1c0 + this.r0c2 * other.r2c0,
+      this.r0c0 * other.r0c1 + this.r0c1 * other.r1c1 + this.r0c2 * other.r2c1,
+      this.r0c0 * other.r0c2 + this.r0c1 * other.r1c2 + this.r0c2 * other.r2c2,
+      this.r1c0 * other.r0c0 + this.r1c1 * other.r1c0 + this.r1c2 * other.r2c0,
+      this.r1c0 * other.r0c1 + this.r1c1 * other.r1c1 + this.r1c2 * other.r2c1,
+      this.r1c0 * other.r0c2 + this.r1c1 * other.r1c2 + this.r1c2 * other.r2c2,
+      this.r2c0 * other.r0c0 + this.r2c1 * other.r1c0 + this.r2c2 * other.r2c0,
+      this.r2c0 * other.r0c1 + this.r2c1 * other.r1c1 + this.r2c2 * other.r2c1,
+      this.r2c0 * other.r0c2 + this.r2c1 * other.r1c2 + this.r2c2 * other.r2c2,
+    );
   }
 }

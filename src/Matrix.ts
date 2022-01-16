@@ -35,6 +35,16 @@ export interface Matrix<T extends Matrix<T>> {
   transpose: T;
 
   /**
+   * Does this matrix equal another?
+   */
+  equals(other: T): boolean;
+
+  /**
+   * Set the individual, row-based entries for this matrix
+   */
+  set(...entries: number[]): this;
+
+  /**
    * Create a new matrix whose entries scaled by a scalar
    */
   scale(scalar: number): T;
