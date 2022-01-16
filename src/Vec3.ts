@@ -119,6 +119,28 @@ export class Vec3 implements Vec<Vec3> {
   }
 
   /**
+   * Create a new vector that's the cross product of this one and another
+   */
+  cross(other: Vec3): Vec3 {
+    return new Vec3(
+      this.y * other.z - this.z * other.y,
+      this.z * other.x - this.x * other.z,
+      this.x * other.y - this.y * other.x,
+    );
+  }
+
+  /**
+   * Mutate this vector to be the cross product of this one and another
+   */
+  crossMut(other: Vec3): Vec3 {
+    return this.set(
+      this.y * other.z - this.z * other.y,
+      this.z * other.x - this.x * other.z,
+      this.x * other.y - this.y * other.x,
+    );
+  }
+
+  /**
    * Multiply this vector by a matrix
    */
   multiply(m: Matrix3): Vec3 {
