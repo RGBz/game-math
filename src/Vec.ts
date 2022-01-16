@@ -68,4 +68,9 @@ export interface Vec<T extends Vec<T>> {
    * Mutate this vector to be the difference of this vector and another
    */
   subtractMut(other: T): this;
+
+  /**
+   * Are these vectors perpindicular?
+   */
+  isOrthogonalTo(other: T): boolean;
 }

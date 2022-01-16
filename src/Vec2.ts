@@ -136,4 +136,11 @@ export class Vec2 implements Vec<Vec2> {
       m.r1c0 * this.x + m.r1c1 * this.y,
     );
   }
+
+  /**
+   * Are these vectors perpindicular?
+   */
+  isOrthogonalTo(other: Vec2): boolean {
+    return this.dot(other) === 0;
+  }
 }

@@ -81,3 +81,7 @@ test("mutating a vector by a matrix results the vector being a linear combinatio
     new Vec2(10, 15),
   );
 });
+
+test("vectors are orthogonal when their dot product is 0", () => {
+  assert(new Vec2(1, 0).isOrthogonalTo(new Vec2(0, 1)));
+});
