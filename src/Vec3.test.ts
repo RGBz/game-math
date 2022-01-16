@@ -5,6 +5,10 @@ import { Vec3 } from "./Vec3.ts";
 
 suite("Vec3");
 
+test("a vector as an array is [x, y, z]", () => {
+  assertEquals(new Vec3(101, 247, 99).array, [101, 247, 99]);
+});
+
 test("a vector's size is equal to the number of components it has", () => {
   assertEquals(Vec3.zero.size, 3);
 });
