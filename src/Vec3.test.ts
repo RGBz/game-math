@@ -111,3 +111,7 @@ test("mutating a vector by a matrix results the vector being a linear combinatio
 test("vectors are orthogonal when their dot product is 0", () => {
   assert(new Vec3(1, 0, 1).isOrthogonalTo(new Vec3(0, 1, 0)));
 });
+
+test("vectors are parallel when their cross product is the zero vector", () => {
+  assert(new Vec3(1, 0, 1).isParallelTo(new Vec3(3, 0, 3)));
+});

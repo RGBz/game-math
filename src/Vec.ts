@@ -70,7 +70,7 @@ export interface Vec<T extends Vec<T>> {
   subtractMut(other: T): this;
 
   /**
-   * Are these vectors perpindicular?
+   * Are these vectors perpendicular?
    */
   isOrthogonalTo(other: T): boolean;
 }

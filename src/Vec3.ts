@@ -163,9 +163,16 @@ export class Vec3 implements Vec<Vec3> {
   }
 
   /**
-   * Are these vectors perpindicular?
+   * Are these vectors perpendicular?
    */
   isOrthogonalTo(other: Vec3): boolean {
     return this.dot(other) === 0;
+  }
+
+  /**
+   * Are these vectors parallal?
+   */
+  isParallelTo(other: Vec3): boolean {
+    return this.cross(other).equals(Vec3.zero);
   }
 }

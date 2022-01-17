@@ -138,7 +138,7 @@ export class Vec2 implements Vec<Vec2> {
   }
 
   /**
-   * Are these vectors perpindicular?
+   * Are these vectors perpendicular?
    */
   isOrthogonalTo(other: Vec2): boolean {
     return this.dot(other) === 0;
