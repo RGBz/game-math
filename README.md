@@ -2,7 +2,12 @@
 
 A Deno project with a collection of objects relevant to math for video games.
 
-Includes:
+## 2D
 
-- [2D Vectors (Vec2)](src/Vec2.ts)
-- [3D Vectors (Vec3)](src/Vec3.ts)
+- [Vector (Vec2)](src/Vec2.ts)
+- [Matrix (Matrix2)](src/Matrix2.ts)
+
+## 3D
+
+- [Vector (Vec3)](src/Vec3.ts)
+- [Matrix (Matrix3)](src/Matrix3.ts)
