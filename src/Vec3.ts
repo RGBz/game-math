@@ -191,6 +191,20 @@ export class Vec3 implements Vec<Vec3> {
   }
 
   /**
+   * Get the distance squared between the points represented by this vector and another
+   */
+  distanceToSquared(other: Vec3): number {
+    return other.subtract(this).magnitudeSquared;
+  }
+
+  /**
+   * Get the distance between the points represented by this vector and another
+   */
+  distanceTo(other: Vec3): number {
+    return other.subtract(this).magnitude;
+  }
+
+  /**
    * Create a new vector that's this one projected onto another
    */
   projectOnto(other: Vec3): Vec3 {

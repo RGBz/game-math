@@ -85,6 +85,16 @@ export interface Vec<T extends Vec<T>> {
   isOrthogonalTo(other: T): boolean;
 
   /**
+   * Get the distance squared between the points represented by this vector and another
+   */
+  distanceToSquared(other: T): number;
+
+  /**
+   * Get the distance between the points represented by this vector and another
+   */
+  distanceTo(other: T): number;
+
+  /**
    * Create a new vector that's this one projected onto another
    */
   projectOnto(other: T): T;

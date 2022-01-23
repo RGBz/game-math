@@ -123,6 +123,14 @@ test("vectors are parallel when their cross product is the zero vector", () => {
   assert(new Vec3(1, 0, 1).isParallelTo(new Vec3(3, 0, 3)));
 });
 
+test("the distance squared between vectors is the magnitude squared of their difference", () => {
+  assertEquals(new Vec3(10, 10, 10).distanceToSquared(new Vec3(9, 8, 8)), 9);
+});
+
+test("the distance between vectors is the magnitude of their difference", () => {
+  assertEquals(new Vec3(10, 10, 10).distanceTo(new Vec3(9, 8, 8)), 3);
+});
+
 test("projecting a vector onto another results in a new vector that points in the same direction as the other", () => {
   assertEquals(
     new Vec3(1, 2, 3).projectOnto(new Vec3(-1, 5, -2)),

@@ -92,6 +92,14 @@ test("vectors are orthogonal when their dot product is 0", () => {
   assert(new Vec2(1, 0).isOrthogonalTo(new Vec2(0, 1)));
 });
 
+test("the distance squared between vectors is the magnitude squared of their difference", () => {
+  assertEquals(new Vec2(10, 10).distanceToSquared(new Vec2(7, 6)), 25);
+});
+
+test("the distance between vectors is the magnitude of their difference", () => {
+  assertEquals(new Vec2(10, 10).distanceTo(new Vec2(7, 6)), 5);
+});
+
 test("projecting a vector onto another results in a new vector that points in the same direction as the other", () => {
   assertEquals(
     new Vec2(1, 2).projectOnto(new Vec2(-1, 2)),
