@@ -25,6 +25,11 @@ export interface Vec<T extends Vec<T>> {
   array: number[];
 
   /**
+   * Is this the zero vector?
+   */
+  isZero: boolean;
+
+  /**
    * Does this vector equal another
    */
   equals(other: T): boolean;
@@ -33,6 +38,11 @@ export interface Vec<T extends Vec<T>> {
    * Set the individual components of the vector
    */
   set(...components: number[]): this;
+
+  /**
+   * Copy the components from another vector to this one
+   */
+  setFrom(other: T): this;
 
   /**
    * The dot product of this vector and another
@@ -73,4 +83,24 @@ export interface Vec<T extends Vec<T>> {
    * Are these vectors perpendicular?
    */
   isOrthogonalTo(other: T): boolean;
+
+  /**
+   * Create a new vector that's this one projected onto another
+   */
+  projectOnto(other: T): T;
+
+  /**
+   * Mutate this vector to be this one projected onto another
+   */
+  projectOntoMut(other: T): this;
+
+  /**
+   * Create a new vector that's this one rejected from another
+   */
+  rejectFrom(other: T): T;
+
+  /**
+   * Mutate this vector to be this one rejected from another
+   */
+  rejectFromMut(other: T): this;
 }

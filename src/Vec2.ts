@@ -53,6 +53,13 @@ export class Vec2 implements Vec<Vec2> {
   }
 
   /**
+   * Is this the zero vector?
+   */
+  get isZero(): boolean {
+    return this.x === 0 && this.y === 0;
+  }
+
+  /**
    * Confirm all components are identical between this vector and another
    */
   equals(other: Vec2): boolean {
@@ -66,6 +73,13 @@ export class Vec2 implements Vec<Vec2> {
     this.x = x;
     this.y = y;
     return this;
+  }
+
+  /**
+   * Copy the components from another vector to this one
+   */
+  setFrom({ x, y }: Vec2): this {
+    return this.set(x, y);
   }
 
   /**
@@ -142,5 +156,33 @@ export class Vec2 implements Vec<Vec2> {
    */
   isOrthogonalTo(other: Vec2): boolean {
     return this.dot(other) === 0;
+  }
+
+  /**
+   * Create a new vector that's this one projected onto another
+   */
+  projectOnto(other: Vec2): Vec2 {
+    return other.scale(this.dot(other) / other.dot(other));
+  }
+
+  /**
+   * Mutate this vector to be this one projected onto another
+   */
+  projectOntoMut(other: Vec2): this {
+    return this.setFrom(this.projectOnto(other));
+  }
+
+  /**
+   * Create a new vector that's this one rejected from another
+   */
+  rejectFrom(other: Vec2): Vec2 {
+    return this.subtract(this.projectOnto(other));
+  }
+
+  /**
+   * Mutate this vector to be this one rejected from another
+   */
+  rejectFromMut(other: Vec2): this {
+    return this.subtractMut(this.projectOnto(other));
   }
 }

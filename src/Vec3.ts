@@ -53,6 +53,13 @@ export class Vec3 implements Vec<Vec3> {
   }
 
   /**
+   * Is this the zero vector?
+   */
+  get isZero(): boolean {
+    return this.x === 0 && this.y === 0 && this.z === 0;
+  }
+
+  /**
    * Confirm all components are identical between this vector and another
    */
   equals(other: Vec3): boolean {
@@ -67,6 +74,13 @@ export class Vec3 implements Vec<Vec3> {
     this.y = y;
     this.z = z;
     return this;
+  }
+
+  /**
+   * Copy the components from another vector to this one
+   */
+  setFrom({ x, y, z }: Vec3): this {
+    return this.set(x, y, z);
   }
 
   /**
@@ -173,6 +187,34 @@ export class Vec3 implements Vec<Vec3> {
    * Are these vectors parallal?
    */
   isParallelTo(other: Vec3): boolean {
-    return this.cross(other).equals(Vec3.zero);
+    return this.cross(other).isZero;
+  }
+
+  /**
+   * Create a new vector that's this one projected onto another
+   */
+  projectOnto(other: Vec3): Vec3 {
+    return other.scale(this.dot(other) / other.dot(other));
+  }
+
+  /**
+   * Mutate this vector to be this one projected onto another
+   */
+  projectOntoMut(other: Vec3): this {
+    return this.setFrom(this.projectOnto(other));
+  }
+
+  /**
+   * Create a new vector that's this one rejected from another
+   */
+  rejectFrom(other: Vec3): Vec3 {
+    return this.subtract(this.projectOnto(other));
+  }
+
+  /**
+   * Mutate this vector to be this one rejected from another
+   */
+  rejectFromMut(other: Vec3): this {
+    return this.subtractMut(this.projectOnto(other));
   }
 }

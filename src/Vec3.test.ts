@@ -46,6 +46,13 @@ test("the unit of a vector scaled by the magnitude of the vector should the same
   assertKindaEquals(new Vec3(1, 2, 2).unit.scale(3), new Vec3(1, 2, 2));
 });
 
+test("a vector is a zero vector when all components are zero", () => {
+  assert(new Vec3(0, 0, 0).isZero);
+  assert(!new Vec3(1, 0, 0).isZero);
+  assert(!new Vec3(0, 1, 0).isZero);
+  assert(!new Vec3(0, 0, 1).isZero);
+});
+
 test("adding another vector to a vector should result in a new vector whose components are the sum of the paired components from each addend vector", () => {
   assertEquals(new Vec3(3, 4, 5).add(new Vec3(6, 7, 8)), new Vec3(9, 11, 13));
 });
@@ -114,4 +121,18 @@ test("vectors are orthogonal when their dot product is 0", () => {
 
 test("vectors are parallel when their cross product is the zero vector", () => {
   assert(new Vec3(1, 0, 1).isParallelTo(new Vec3(3, 0, 3)));
+});
+
+test("projecting a vector onto another results in a new vector that points in the same direction as the other", () => {
+  assertEquals(
+    new Vec3(1, 2, 3).projectOnto(new Vec3(-1, 5, -2)),
+    new Vec3(-0.1, 0.5, -0.2),
+  );
+});
+
+test("mutating a vector by projecting it onto another results in the vector pointing in the same direction as the other", () => {
+  assertEquals(
+    new Vec3(1, 2, 3).projectOntoMut(new Vec3(-1, 5, -2)),
+    new Vec3(-0.1, 0.5, -0.2),
+  );
 });
