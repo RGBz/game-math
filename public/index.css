@@ -1,0 +1,29 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#inputs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #00000088;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 100px 100px;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+input {
+  text-align: center;
+  font-size: 48px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-family: monospace;
+}
