@@ -136,3 +136,17 @@ test("mutating a vector by projecting it onto another results in the vector poin
     new Vec3(-0.1, 0.5, -0.2),
   );
 });
+
+test("rejecting a vector from another results in a new vector that is perpendicular to the other", () => {
+  assertEquals(
+    new Vec3(1, 2, 3).rejectFrom(new Vec3(-1, 5, -2)),
+    new Vec3(1.1, 1.5, 3.2),
+  );
+});
+
+test("mutating a vector by rejecting it from another results in the vector being perpendicular to the other", () => {
+  assertEquals(
+    new Vec3(1, 2, 3).rejectFromMut(new Vec3(-1, 5, -2)),
+    new Vec3(1.1, 1.5, 3.2),
+  );
+});
