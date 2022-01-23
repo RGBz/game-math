@@ -94,7 +94,7 @@ export class Matrix2 implements Matrix<Matrix2> {
   }
 
   /**
-   * The magnitude of the matrix
+   * The area or volume of the matrix
    */
   get determinant(): number {
     return this.r0c0 * this.r1c1 - this.r0c1 * this.r1c0;

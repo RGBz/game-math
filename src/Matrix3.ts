@@ -154,7 +154,7 @@ export class Matrix3 implements Matrix<Matrix3> {
   }
 
   /**
-   * The magnitude of the matrix
+   * The area or volume of the matrix
    */
   get determinant(): number {
     return (

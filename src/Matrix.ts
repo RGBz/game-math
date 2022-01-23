@@ -35,7 +35,7 @@ export interface Matrix<T extends Matrix<T>> {
   transpose: T;
 
   /**
-   * The magnitude of the matrix
+   * The area or volume of the matrix
    */
   determinant: number;
 

@@ -78,7 +78,7 @@ test("the transpose of a matrix flips it along its diagonal", () => {
   );
 });
 
-test("the determinant of a matrix is its magnitude", () => {
+test("the determinant of a matrix is the volume of transformed unit cube", () => {
   assertEquals(Matrix3.identity.determinant, 1);
   assertEquals(
     Matrix3.fromRows(
