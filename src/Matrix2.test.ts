@@ -1,5 +1,5 @@
 import { assertEquals } from "testing/asserts.ts";
-import { suite, test } from "./testing.ts";
+import { assertKindaEquals, suite, test } from "./testing.ts";
 import { Matrix2 } from "./Matrix2.ts";
 
 suite("Matrix2");
@@ -69,6 +69,19 @@ test("the transpose of a matrix flips it along its diagonal", () => {
     Matrix2.fromRows(
       [1, 4],
       [2, 5],
+    ),
+  );
+});
+
+test("the inverse of a matrix can be multiplied against the matrix to get the identity matrix", () => {
+  assertKindaEquals(
+    Matrix2.fromRows(
+      [4, 7],
+      [2, 6],
+    ).inverse,
+    Matrix2.fromRows(
+      [0.6, -0.7],
+      [-0.2, 0.4],
     ),
   );
 });

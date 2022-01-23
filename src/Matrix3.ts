@@ -1,4 +1,5 @@
 import { Matrix } from "./Matrix.ts";
+import { Vec3 } from "./Vec3.ts";
 
 export class Matrix3 implements Matrix<Matrix3> {
   /**
@@ -150,6 +151,30 @@ export class Matrix3 implements Matrix<Matrix3> {
       this.r0c2,
       this.r1c2,
       this.r2c2,
+    );
+  }
+
+  /**
+   * Create a new matrix that is the inverse of this one (multiplying by it gives us the identity matrix)
+   */
+  get inverse(): Matrix3 {
+    const a = new Vec3(this.r0c0, this.r1c0, this.r2c0);
+    const b = new Vec3(this.r0c1, this.r1c1, this.r2c1);
+    const c = new Vec3(this.r0c2, this.r1c2, this.r2c2);
+    const r0 = b.cross(c);
+    const r1 = c.cross(a);
+    const r2 = a.cross(b);
+    const determinantInverse = 1 / r2.dot(c);
+    return new Matrix3(
+      r0.x * determinantInverse,
+      r0.y * determinantInverse,
+      r0.z * determinantInverse,
+      r1.x * determinantInverse,
+      r1.y * determinantInverse,
+      r1.z * determinantInverse,
+      r2.x * determinantInverse,
+      r2.y * determinantInverse,
+      r2.z * determinantInverse,
     );
   }
 

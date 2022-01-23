@@ -35,6 +35,11 @@ export interface Matrix<T extends Matrix<T>> {
   transpose: T;
 
   /**
+   * Create a new matrix that is the inverse of this one (multiplying by it gives us the identity matrix)
+   */
+  inverse: T;
+
+  /**
    * The area or volume of the matrix
    */
   determinant: number;

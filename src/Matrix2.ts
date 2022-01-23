@@ -94,6 +94,19 @@ export class Matrix2 implements Matrix<Matrix2> {
   }
 
   /**
+   * Create a new matrix that is the inverse of this one (multiplying by it gives us the identity matrix)
+   */
+  get inverse(): Matrix2 {
+    const determinantInverse = 1 / this.determinant;
+    return new Matrix2(
+      this.r1c1 * determinantInverse,
+      -this.r0c1 * determinantInverse,
+      -this.r1c0 * determinantInverse,
+      this.r0c0 * determinantInverse,
+    );
+  }
+
+  /**
    * The area or volume of the matrix
    */
   get determinant(): number {
