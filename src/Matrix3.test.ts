@@ -78,6 +78,18 @@ test("the transpose of a matrix flips it along its diagonal", () => {
   );
 });
 
+test("the determinant of a matrix is its magnitude", () => {
+  assertEquals(Matrix3.identity.determinant, 1);
+  assertEquals(
+    Matrix3.fromRows(
+      [4, -3, 5],
+      [1, 0, 3],
+      [-1, 5, 2],
+    ).determinant,
+    -20,
+  );
+});
+
 test("a matrix made from rows is the transpose of one made from columns", () => {
   assertEquals(
     Matrix3.fromRows(

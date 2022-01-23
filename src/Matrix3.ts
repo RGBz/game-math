@@ -154,6 +154,17 @@ export class Matrix3 implements Matrix<Matrix3> {
   }
 
   /**
+   * The magnitude of the matrix
+   */
+  get determinant(): number {
+    return (
+      (this.r0c0 * (this.r1c1 * this.r2c2 - this.r1c2 * this.r2c1)) +
+      (this.r0c1 * (this.r1c2 * this.r2c0 - this.r1c0 * this.r2c2)) +
+      (this.r0c2 * (this.r1c0 * this.r2c1 - this.r1c1 * this.r2c0))
+    );
+  }
+
+  /**
    * Does this matrix equal another?
    */
   equals(other: Matrix3): boolean {

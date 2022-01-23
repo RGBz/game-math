@@ -35,6 +35,11 @@ export interface Matrix<T extends Matrix<T>> {
   transpose: T;
 
   /**
+   * The magnitude of the matrix
+   */
+  determinant: number;
+
+  /**
    * Does this matrix equal another?
    */
   equals(other: T): boolean;
