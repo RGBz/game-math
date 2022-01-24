@@ -2,6 +2,7 @@
   "deno.enable": true,
   "deno.lint": true,
   "deno.unstable": true,
+  "deno.config": "./deno.json",
   "deno.importMap": "./import-map.json",
   "deno.suggest.imports.hosts": {
     "https://cdn.skypack.dev": false,
