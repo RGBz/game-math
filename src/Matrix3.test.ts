@@ -6,6 +6,33 @@ import { degreesToRadians } from "./util.ts";
 
 suite("Matrix3");
 
+test("a reflection matrix reflects a vector off the plane described by its normal vector", () => {
+  assertKindaEquals(
+    new Vec3(1, 2, 3).multiply(
+      Matrix3.reflection(new Vec3(1, 0, 0)),
+    ),
+    new Vec3(-1, 2, 3),
+  );
+  assertKindaEquals(
+    new Vec3(1, 2, 3).multiply(
+      Matrix3.reflection(new Vec3(0, 1, 0)),
+    ),
+    new Vec3(1, -2, 3),
+  );
+  assertKindaEquals(
+    new Vec3(1, 2, 3).multiply(
+      Matrix3.reflection(new Vec3(0, 0, 1)),
+    ),
+    new Vec3(1, 2, -3),
+  );
+  assertKindaEquals(
+    new Vec3(1, 2, 3).multiply(
+      Matrix3.reflection(new Vec3(1, 1, 1)),
+    ),
+    new Vec3(-11, -10, -9),
+  );
+});
+
 test("a rotation matrix rotates a vector about the defined axis when multiplied", () => {
   assertKindaEquals(
     new Vec3(1, 1, 1).multiply(

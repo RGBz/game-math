@@ -3,6 +3,29 @@ import { Vec3 } from "./Vec3.ts";
 
 export class Matrix3 implements Matrix<Matrix3> {
   /**
+   * Create a matrix to reflect off the plane perpendicular to a vector
+   */
+  static reflection(planeNormal: Vec3): Matrix3 {
+    const x = planeNormal.x * -2;
+    const y = planeNormal.y * -2;
+    const z = planeNormal.z * -2;
+    const axay = x * planeNormal.y;
+    const axaz = x * planeNormal.z;
+    const ayaz = y * planeNormal.z;
+    return new Matrix3(
+      x * planeNormal.x + 1,
+      axay,
+      axaz,
+      axay,
+      y * planeNormal.y + 1,
+      ayaz,
+      axaz,
+      ayaz,
+      z * planeNormal.z + 1,
+    );
+  }
+
+  /**
    * Create a matrix to rotate around a vector axis
    */
   static rotation(radians: number, axis: Vec3): Matrix3 {
