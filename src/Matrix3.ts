@@ -3,9 +3,30 @@ import { Vec3 } from "./Vec3.ts";
 
 export class Matrix3 implements Matrix<Matrix3> {
   /**
+   * Create a matrix to skew a vector
+   */
+  static skewing(radians: number, a: Vec3, b: Vec3): Matrix3 {
+    const t = Math.tan(radians);
+    const x = a.x * t;
+    const y = a.y * t;
+    const z = a.z * t;
+    return new Matrix3(
+      x * b.x + 1,
+      x * b.y,
+      x * b.z,
+      y * b.x,
+      y * b.y + 1,
+      y * b.z,
+      z * b.x,
+      z * b.y,
+      z * b.z + 1,
+    );
+  }
+
+  /**
    * Create a matrix to scale a vector
    */
-  static scale(scalar: number): Matrix3 {
+  static scaling(scalar: number): Matrix3 {
     return new Matrix3(scalar, 0, 0, 0, scalar, 0, 0, 0, scalar);
   }
 

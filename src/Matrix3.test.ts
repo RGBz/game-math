@@ -6,10 +6,23 @@ import { degreesToRadians } from "./util.ts";
 
 suite("Matrix3");
 
-test("a scale matrix scales a vector the described amount when multiplied", () => {
+test("a skewing matrix skews a vector the described amount when multiplied", () => {
   assertKindaEquals(
     new Vec3(1, 2, 3).multiply(
-      Matrix3.scale(-2),
+      Matrix3.skewing(
+        degreesToRadians(45),
+        new Vec3(1, 1, 1),
+        new Vec3(2, 8, 5),
+      ),
+    ),
+    new Vec3(34, 35, 36),
+  );
+});
+
+test("a scaling matrix scales a vector the described amount when multiplied", () => {
+  assertKindaEquals(
+    new Vec3(1, 2, 3).multiply(
+      Matrix3.scaling(-2),
     ),
     new Vec3(-2, -4, -6),
   );

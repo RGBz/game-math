@@ -8,7 +8,7 @@ export function assertKindaEquals(
   a: unknown,
   b: unknown,
   msg?: string,
-  epsilon = 0.000000000000001,
+  epsilon = 0.00000000000001,
 ): void {
   if (!kindaEquals(a, b, epsilon)) {
     assertEquals(a, b, msg);
