@@ -3,6 +3,32 @@ import { Vec3 } from "./Vec3.ts";
 
 export class Matrix3 implements Matrix<Matrix3> {
   /**
+   * Create a matrix to rotate around a vector axis
+   */
+  static rotation(radians: number, axis: Vec3): Matrix3 {
+    const c = Math.cos(radians);
+    const s = Math.sin(radians);
+    const d = 1 - c;
+    const x = axis.x * d;
+    const y = axis.y * d;
+    const z = axis.z * d;
+    const axay = x * axis.y;
+    const axaz = x * axis.z;
+    const ayaz = y * axis.z;
+    return new Matrix3(
+      c + x * axis.x,
+      axay - s * axis.z,
+      axaz + s * axis.y,
+      axay + s * axis.z,
+      c + y * axis.y,
+      ayaz - s * axis.x,
+      axaz - s * axis.y,
+      ayaz + s * axis.x,
+      c + z * axis.z,
+    );
+  }
+
+  /**
    * Create a matrix to rotate radians around the X axis
    */
   static xAxisRotation(radians: number): Matrix3 {

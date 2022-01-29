@@ -6,6 +6,27 @@ import { degreesToRadians } from "./util.ts";
 
 suite("Matrix3");
 
+test("a rotation matrix rotates a vector about the defined axis when multiplied", () => {
+  assertKindaEquals(
+    new Vec3(1, 1, 1).multiply(
+      Matrix3.rotation(degreesToRadians(90), new Vec3(1, 0, 0)),
+    ),
+    new Vec3(1, -1, 1),
+  );
+  assertKindaEquals(
+    new Vec3(1, 1, 1).multiply(
+      Matrix3.rotation(degreesToRadians(90), new Vec3(0, 1, 0)),
+    ),
+    new Vec3(1, 1, -1),
+  );
+  assertKindaEquals(
+    new Vec3(1, 1, 1).multiply(
+      Matrix3.rotation(degreesToRadians(90), new Vec3(0, 0, 1)),
+    ),
+    new Vec3(-1, 1, 1),
+  );
+});
+
 test("an X axis rotation matrix rotates a vector about the X axis when multiplied", () => {
   assertKindaEquals(
     new Vec3(1, 1, 1).multiply(Matrix3.xAxisRotation(degreesToRadians(90))),
