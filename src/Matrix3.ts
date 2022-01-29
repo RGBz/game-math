@@ -3,6 +3,13 @@ import { Vec3 } from "./Vec3.ts";
 
 export class Matrix3 implements Matrix<Matrix3> {
   /**
+   * Create a matrix to scale a vector
+   */
+  static scale(scalar: number): Matrix3 {
+    return new Matrix3(scalar, 0, 0, 0, scalar, 0, 0, 0, scalar);
+  }
+
+  /**
    * Create a matrix to reflect off the plane perpendicular to a vector
    */
   static reflection(planeNormal: Vec3): Matrix3 {

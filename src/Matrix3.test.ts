@@ -6,7 +6,16 @@ import { degreesToRadians } from "./util.ts";
 
 suite("Matrix3");
 
-test("a reflection matrix reflects a vector off the plane described by its normal vector", () => {
+test("a scale matrix scales a vector the described amount when multiplied", () => {
+  assertKindaEquals(
+    new Vec3(1, 2, 3).multiply(
+      Matrix3.scale(-2),
+    ),
+    new Vec3(-2, -4, -6),
+  );
+});
+
+test("a reflection matrix reflects a vector off the plane described by its normal vector when multiplied", () => {
   assertKindaEquals(
     new Vec3(1, 2, 3).multiply(
       Matrix3.reflection(new Vec3(1, 0, 0)),
