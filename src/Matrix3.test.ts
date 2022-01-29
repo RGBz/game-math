@@ -1,8 +1,31 @@
 import { assertEquals } from "testing/asserts.ts";
 import { assertKindaEquals, suite, test } from "./testing.ts";
 import { Matrix3 } from "./Matrix3.ts";
+import { Vec3 } from "./Vec3.ts";
+import { degreesToRadians } from "./util.ts";
 
 suite("Matrix3");
+
+test("an X axis rotation matrix rotates a vector about the X axis when multiplied", () => {
+  assertKindaEquals(
+    new Vec3(1, 1, 1).multiply(Matrix3.xAxisRotation(degreesToRadians(90))),
+    new Vec3(1, -1, 1),
+  );
+});
+
+test("an Y axis rotation matrix rotates a vector about the X axis when multiplied", () => {
+  assertKindaEquals(
+    new Vec3(1, 1, 1).multiply(Matrix3.yAxisRotation(degreesToRadians(90))),
+    new Vec3(1, 1, -1),
+  );
+});
+
+test("an Z axis rotation matrix rotates a vector about the X axis when multiplied", () => {
+  assertKindaEquals(
+    new Vec3(1, 1, 1).multiply(Matrix3.zAxisRotation(degreesToRadians(90))),
+    new Vec3(-1, 1, 1),
+  );
+});
 
 test("a zero matrix has all zero entries", () => {
   assertEquals(Matrix3.zero, new Matrix3(0, 0, 0, 0, 0, 0, 0, 0, 0));
