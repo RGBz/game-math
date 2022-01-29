@@ -6,10 +6,25 @@ import { Vec } from "./Vec.ts";
  */
 export class Vec3 implements Vec<Vec3> {
   /**
-   * Get a new vector whose components are all 0 (AKA at the origin)
+   * Create a new vector whose components are all 0 (AKA at the origin)
    */
   static get zero(): Vec3 {
     return new Vec3(0, 0, 0);
+  }
+
+  /**
+   * Create a new vector from spherical coordinates
+   */
+  static fromSpherical(
+    radius: number,
+    azimuth: number,
+    inclination: number,
+  ): Vec3 {
+    const sa = Math.sin(azimuth);
+    const si = Math.sin(inclination);
+    const ca = Math.cos(azimuth);
+    const ci = Math.cos(inclination);
+    return new Vec3(radius * ca * si, radius * ci, radius * sa * si);
   }
 
   /**

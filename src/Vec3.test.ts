@@ -2,6 +2,7 @@ import { assert, assertEquals } from "testing/asserts.ts";
 import { assertKindaEquals, suite, test } from "./testing.ts";
 import { Matrix3 } from "./Matrix3.ts";
 import { Vec3 } from "./Vec3.ts";
+import { degreesToRadians } from "./util.ts";
 
 suite("Vec3");
 
@@ -20,6 +21,13 @@ test("a vector equals another when their components match", () => {
 
 test("the zero vector should have 0 for the x, y and z components", () => {
   assertEquals(Vec3.zero, new Vec3(0, 0, 0));
+});
+
+test("a vector created from spherical coordinates should be the rotated radius off the origin", () => {
+  assertKindaEquals(
+    Vec3.fromSpherical(1, degreesToRadians(180), degreesToRadians(180)),
+    new Vec3(0, -1, 0),
+  );
 });
 
 test("the magnitude squared of a vector is the sum of its components squared", () => {
