@@ -10,10 +10,6 @@ test("a vector as an array is [x, y, z]", () => {
   assertEquals(new Vec3(101, 247, 99).array, [101, 247, 99]);
 });
 
-test("a vector's size is equal to the number of components it has", () => {
-  assertEquals(Vec3.zero.size, 3);
-});
-
 test("a vector equals another when their components match", () => {
   assert(new Vec3(3, 4, 5).equals(new Vec3(3, 4, 5)));
   assert(!new Vec3(3, 4, 5).equals(new Vec3(6, 7, 8)));
@@ -38,6 +34,15 @@ test("the magnitude of a vector is the square root of the sum of its components 
   assertEquals(new Vec3(1, 2, 2).magnitude, 3);
 });
 
+test("the azimuth of a vector is the spherical azimuth coordinate", () => {
+  assertEquals(new Vec3(1, 2, 3).azimuth, 1.2490457723982544);
+  assertEquals(new Vec3(1, 2, -3).azimuth, 5.034139534781332);
+});
+
+test("the inclination of a vector is the spherical inclination coordinate", () => {
+  assertEquals(new Vec3(1, 2, 3).inclination, 1.0068536854342678);
+});
+
 test("when a vector is scaled by a scalar it should result in a new vector where each component is the product of the original component and the scalar", () => {
   assertEquals(new Vec3(3, 4, 5).scale(2), new Vec3(6, 8, 10));
 });
@@ -54,11 +59,67 @@ test("the unit of a vector scaled by the magnitude of the vector should the same
   assertKindaEquals(new Vec3(1, 2, 2).unit.scale(3), new Vec3(1, 2, 2));
 });
 
+test("the clone of a vector is a new vector with the same components", () => {
+  assertEquals(new Vec3(3, 4, 5).clone(), new Vec3(3, 4, 5));
+});
+
 test("a vector is a zero vector when all components are zero", () => {
   assert(new Vec3(0, 0, 0).isZero);
   assert(!new Vec3(1, 0, 0).isZero);
   assert(!new Vec3(0, 1, 0).isZero);
   assert(!new Vec3(0, 0, 1).isZero);
+});
+
+test("setting the a vector from spherical coordinates updates it in place", () => {
+  assertKindaEquals(
+    new Vec3(3, 4, 5).setFromSpherical(
+      1,
+      degreesToRadians(180),
+      degreesToRadians(180),
+    ),
+    new Vec3(0, -1, 0),
+  );
+});
+
+test("setting the x coordinate of a vector should result in only the x coordinate changing", () => {
+  assertEquals(new Vec3(3, 4, 5).setX(7), new Vec3(7, 4, 5));
+});
+
+test("setting the y coordinate of a vector should result in only the y coordinate changing", () => {
+  assertEquals(new Vec3(3, 4, 5).setY(7), new Vec3(3, 7, 5));
+});
+
+test("setting the z coordinate of a vector should result in only the z coordinate changing", () => {
+  assertEquals(new Vec3(3, 4, 5).setZ(7), new Vec3(3, 4, 7));
+});
+
+test("setting the magnitude preserves direction", () => {
+  assertEquals(
+    new Vec3(1, 2, 2).setMagnitude(300),
+    new Vec3(100, 200, 200),
+  );
+});
+
+test("clamping the magnitude gives a new vector no longer than the provided magnitude", () => {
+  assertEquals(
+    new Vec3(100, 200, 200).clampMagnitude(3),
+    new Vec3(1, 2, 2),
+  );
+  assertEquals(
+    new Vec3(1, 2, 2).clampMagnitude(4),
+    new Vec3(1, 2, 2),
+  );
+});
+
+test("mutating a vector to clamp the magnitude causes the vector to be no longer than the provided magnitude", () => {
+  assertEquals(
+    new Vec3(100, 200, 200).clampMagnitudeMut(3),
+    new Vec3(1, 2, 2),
+  );
+  assertEquals(
+    new Vec3(1, 2, 2).clampMagnitudeMut(4),
+    new Vec3(1, 2, 2),
+  );
 });
 
 test("adding another vector to a vector should result in a new vector whose components are the sum of the paired components from each addend vector", () => {
@@ -129,14 +190,6 @@ test("vectors are orthogonal when their dot product is 0", () => {
 
 test("vectors are parallel when their cross product is the zero vector", () => {
   assert(new Vec3(1, 0, 1).isParallelTo(new Vec3(3, 0, 3)));
-});
-
-test("the distance squared between vectors is the magnitude squared of their difference", () => {
-  assertEquals(new Vec3(10, 10, 10).distanceToSquared(new Vec3(9, 8, 8)), 9);
-});
-
-test("the distance between vectors is the magnitude of their difference", () => {
-  assertEquals(new Vec3(10, 10, 10).distanceTo(new Vec3(9, 8, 8)), 3);
 });
 
 test("projecting a vector onto another results in a new vector that points in the same direction as the other", () => {

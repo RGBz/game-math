@@ -1,10 +1,9 @@
 import { Matrix3 } from "./Matrix3.ts";
-import { Vec } from "./Vec.ts";
 
 /**
  * A vector in 3 dimensions
  */
-export class Vec3 implements Vec<Vec3> {
+export class Vec3 {
   /**
    * Create a new vector whose components are all 0 (AKA at the origin)
    */
@@ -33,13 +32,6 @@ export class Vec3 implements Vec<Vec3> {
   constructor(public x: number, public y: number, public z: number) {}
 
   /**
-   * Get the number of components in the vector
-   */
-  get size(): number {
-    return 3;
-  }
-
-  /**
    * Square of the magnitude (length of the vector)
    */
   get magnitudeSquared(): number {
@@ -51,6 +43,22 @@ export class Vec3 implements Vec<Vec3> {
    */
   get magnitude(): number {
     return Math.sqrt(this.magnitudeSquared);
+  }
+
+  /**
+   * The spherical azimuth coordinate
+   */
+  get azimuth(): number {
+    const { x, z } = this.unit;
+    const p = Math.atan2(z, x);
+    return p < 0 ? p + 2 * Math.PI : p;
+  }
+
+  /**
+   * The spherical inclination coordinate
+   */
+  get inclination(): number {
+    return Math.acos(this.unit.y);
   }
 
   /**
@@ -82,6 +90,13 @@ export class Vec3 implements Vec<Vec3> {
   }
 
   /**
+   * Create a new vector that's a clone of this one
+   */
+  clone(): Vec3 {
+    return new Vec3(this.x, this.y, this.z);
+  }
+
+  /**
    * Set the individual (x, y, z) components
    */
   set(x: number, y: number, z: number): this {
@@ -96,6 +111,66 @@ export class Vec3 implements Vec<Vec3> {
    */
   setFrom({ x, y, z }: Vec3): this {
     return this.set(x, y, z);
+  }
+
+  /**
+   * Set the x coordinate
+   */
+  setX(value: number): this {
+    this.x = value;
+    return this;
+  }
+
+  /**
+   * Set the y coordinate
+   */
+  setY(value: number): this {
+    this.y = value;
+    return this;
+  }
+
+  /**
+   * Set the z coordinate
+   */
+  setZ(value: number): this {
+    this.z = value;
+    return this;
+  }
+
+  /**
+   * Set this vector from spherical coordinates
+   */
+  setFromSpherical(radius: number, azimuth: number, inclination: number): this {
+    const sa = Math.sin(azimuth);
+    const si = Math.sin(inclination);
+    const ca = Math.cos(azimuth);
+    const ci = Math.cos(inclination);
+    return this.set(radius * ca * si, radius * ci, radius * sa * si);
+  }
+
+  /**
+   * Maintain the direction, but set the magnitude for this vector
+   */
+  setMagnitude(magnitude: number): this {
+    return this.setFrom(this.unit.scaleMut(magnitude));
+  }
+
+  /**
+   * Create a new vector whose direction is the same, but whose magnitude is capped
+   */
+  clampMagnitude(maxMagnitude: number): Vec3 {
+    return this.magnitudeSquared > maxMagnitude * maxMagnitude
+      ? this.unit.scaleMut(maxMagnitude)
+      : this.clone();
+  }
+
+  /**
+   * Cap the magnitude for this vector
+   */
+  clampMagnitudeMut(maxMagnitude: number): this {
+    return this.magnitudeSquared > maxMagnitude * maxMagnitude
+      ? this.setMagnitude(maxMagnitude)
+      : this;
   }
 
   /**
@@ -183,7 +258,7 @@ export class Vec3 implements Vec<Vec3> {
   /**
    * Mutate this vector by multiplying it by a matrix
    */
-  multiplyMut(m: Matrix3): Vec3 {
+  multiplyMut(m: Matrix3): this {
     return this.set(
       m.r0c0 * this.x + m.r0c1 * this.y + m.r0c2 * this.z,
       m.r1c0 * this.x + m.r1c1 * this.y + m.r1c2 * this.z,
@@ -203,20 +278,6 @@ export class Vec3 implements Vec<Vec3> {
    */
   isParallelTo(other: Vec3): boolean {
     return this.cross(other).isZero;
-  }
-
-  /**
-   * Get the distance squared between the points represented by this vector and another
-   */
-  distanceToSquared(other: Vec3): number {
-    return other.subtract(this).magnitudeSquared;
-  }
-
-  /**
-   * Get the distance between the points represented by this vector and another
-   */
-  distanceTo(other: Vec3): number {
-    return other.subtract(this).magnitude;
   }
 
   /**

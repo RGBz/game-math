@@ -1,7 +1,6 @@
-import { Matrix } from "./Matrix.ts";
 import { Vec3 } from "./Vec3.ts";
 
-export class Matrix3 implements Matrix<Matrix3> {
+export class Matrix3 {
   /**
    * Create a matrix to skew a vector
    */
@@ -196,27 +195,6 @@ export class Matrix3 implements Matrix<Matrix3> {
     public r2c1: number,
     public r2c2: number,
   ) {}
-
-  /**
-   * The number of rows in the matrix
-   */
-  get rowCount(): number {
-    return 3;
-  }
-
-  /**
-   * The number of columns in the matrix
-   */
-  get columnCount(): number {
-    return 3;
-  }
-
-  /**
-   * Are the number of rows equal to the number of columns?
-   */
-  get isSquare(): boolean {
-    return true;
-  }
 
   /**
    * Are all of the entries off of the main diagonal equal to 0?

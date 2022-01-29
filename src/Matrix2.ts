@@ -1,6 +1,4 @@
-import { Matrix } from "./Matrix.ts";
-
-export class Matrix2 implements Matrix<Matrix2> {
+export class Matrix2 {
   /**
    * Create zero matrix (all entries are 0)
    */
@@ -38,27 +36,6 @@ export class Matrix2 implements Matrix<Matrix2> {
     public r1c0: number,
     public r1c1: number,
   ) {}
-
-  /**
-   * The number of rows in the matrix
-   */
-  get rowCount(): number {
-    return 2;
-  }
-
-  /**
-   * The number of columns in the matrix
-   */
-  get columnCount(): number {
-    return 2;
-  }
-
-  /**
-   * Are the number of rows equal to the number of columns?
-   */
-  get isSquare(): boolean {
-    return true;
-  }
 
   /**
    * Are all of the entries off of the main diagonal equal to 0?

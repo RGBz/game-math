@@ -12,18 +12,6 @@ test("an identity matrix has all zero entries except for ones along the diagonal
   assertEquals(Matrix2.identity, new Matrix2(1, 0, 0, 1));
 });
 
-test("a matrix is square when its row and column counts are equal", () => {
-  assertEquals(Matrix2.zero.isSquare, true);
-});
-
-test("a matrix's row count matches the number of components in its vector columns", () => {
-  assertEquals(Matrix2.zero.rowCount, 2);
-});
-
-test("a matrix's column count matches the number of columns it has", () => {
-  assertEquals(Matrix2.zero.columnCount, 2);
-});
-
 test("a matrix is diagonal when all non-diagonal entries are zero", () => {
   assertEquals(Matrix2.zero.isDiagonal, true);
   assertEquals(Matrix2.identity.isDiagonal, true);

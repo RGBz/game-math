@@ -1,10 +1,9 @@
 import { Matrix2 } from "./Matrix2.ts";
-import { Vec } from "./Vec.ts";
 
 /**
  * A vector in 2 dimensions
  */
-export class Vec2 implements Vec<Vec2> {
+export class Vec2 {
   /**
    * Get a new vector whose components are all 0 (AKA at the origin)
    */
