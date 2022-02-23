@@ -2,6 +2,7 @@ import { assert, assertEquals } from "testing/asserts.ts";
 import { assertKindaEquals, suite, test } from "./testing.ts";
 import { Matrix2 } from "./Matrix2.ts";
 import { Vec2 } from "./Vec2.ts";
+import { degreesToRadians } from "./util.ts";
 
 suite("Vec2");
 
@@ -20,6 +21,21 @@ test("a vector equals another when their components match", () => {
 
 test("the zero vector should have 0 for both x and y components", () => {
   assertEquals(Vec2.zero, new Vec2(0, 0));
+});
+
+test("a vector from an angle should have the expected x and y components", () => {
+  assertKindaEquals(
+    [0, 90, 180, 270, 360].map((angle) =>
+      Vec2.fromAngle(degreesToRadians(angle), 1)
+    ),
+    [
+      new Vec2(1, 0),
+      new Vec2(0, 1),
+      new Vec2(-1, 0),
+      new Vec2(0, -1),
+      new Vec2(1, 0),
+    ],
+  );
 });
 
 test("the magnitude squared of a vector is the square of its x component summed with the square of its y component", () => {

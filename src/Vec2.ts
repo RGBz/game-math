@@ -12,6 +12,13 @@ export class Vec2 {
   }
 
   /**
+   * Create a vector from an angle in radians and a magnitude
+   */
+  static fromAngle(radians: number, magnitude: number): Vec2 {
+    return new Vec2(Math.cos(radians), Math.sin(radians)).scaleMut(magnitude);
+  }
+
+  /**
    * Construct a 2D (x, y) vector
    */
   constructor(public x: number, public y: number) {}
