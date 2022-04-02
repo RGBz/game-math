@@ -3,6 +3,13 @@ import { Vec3 } from "./Vec3.ts";
 
 export class Point3 extends Vec3 {
   /**
+   * Create a new point whose components are all 0
+   */
+   static get origin(): Point3 {
+    return new Point3(0, 0, 0);
+  }
+
+  /**
    * Create a new point that's a clone of this one
    */
   clone(): Point3 {

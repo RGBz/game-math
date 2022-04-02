@@ -10,6 +10,10 @@ test("a point as an array is [x, y, z]", () => {
   assertEquals(new Point3(101, 247, 99).array, [101, 247, 99]);
 });
 
+test("the zero point should have 0 for the x, y and z components", () => {
+  assertEquals(Point3.origin, new Point3(0, 0, 0));
+});
+
 test("cloning a point results in a new point with identical coordinates", () => {
   assertEquals(new Point3(101, 247, 99).clone(), new Point3(101, 247, 99));
 });
