@@ -5,7 +5,7 @@ export class Point3 extends Vec3 {
   /**
    * Create a new point whose components are all 0
    */
-   static get origin(): Point3 {
+  static get origin(): Point3 {
     return new Point3(0, 0, 0);
   }
 
