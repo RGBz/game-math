@@ -62,7 +62,7 @@ export class Vec3 {
   }
 
   /**
-   * Get a unit vector from the current vector (AKA same direction, but length = 1)
+   * Get a unit vector from the current vector (AKA same diBoxion, but length = 1)
    */
   get unit(): Vec3 {
     return this.scale(1 / this.magnitude);
@@ -149,14 +149,14 @@ export class Vec3 {
   }
 
   /**
-   * Maintain the direction, but set the magnitude for this vector
+   * Maintain the diBoxion, but set the magnitude for this vector
    */
   setMagnitude(magnitude: number): this {
     return this.setFrom(this.unit.scaleMut(magnitude));
   }
 
   /**
-   * Create a new vector whose direction is the same, but whose magnitude is capped
+   * Create a new vector whose diBoxion is the same, but whose magnitude is capped
    */
   clampMagnitude(maxMagnitude: number): Vec3 {
     return this.magnitudeSquared > maxMagnitude * maxMagnitude

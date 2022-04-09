@@ -2,7 +2,7 @@ import { assert, assertEquals } from "testing/asserts.ts";
 import { assertKindaEquals, suite, test } from "./testing.ts";
 import { Matrix2 } from "./Matrix2.ts";
 import { Vec2 } from "./Vec2.ts";
-import { degreesToRadians } from "./util.ts";
+import { degreesToRadians } from "./radians.ts";
 
 suite("Vec2");
 
@@ -116,14 +116,14 @@ test("the distance between vectors is the magnitude of their difference", () => 
   assertEquals(new Vec2(10, 10).distanceTo(new Vec2(7, 6)), 5);
 });
 
-test("projecting a vector onto another results in a new vector that points in the same direction as the other", () => {
+test("projecting a vector onto another results in a new vector that points in the same diBoxion as the other", () => {
   assertEquals(
     new Vec2(1, 2).projectOnto(new Vec2(-1, 2)),
     new Vec2(-0.6, 1.2),
   );
 });
 
-test("mutating a vector by projecting it onto another results in the vector pointing in the same direction as the other", () => {
+test("mutating a vector by projecting it onto another results in the vector pointing in the same diBoxion as the other", () => {
   assertEquals(
     new Vec2(1, 2).projectOntoMut(new Vec2(-1, 2)),
     new Vec2(-0.6, 1.2),

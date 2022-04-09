@@ -2,7 +2,7 @@ import { assert, assertEquals } from "testing/asserts.ts";
 import { assertKindaEquals, suite, test } from "./testing.ts";
 import { Matrix3 } from "./Matrix3.ts";
 import { Vec3 } from "./Vec3.ts";
-import { degreesToRadians } from "./util.ts";
+import { degreesToRadians } from "./radians.ts";
 
 suite("Vec3");
 
@@ -93,7 +93,7 @@ test("setting the z coordinate of a vector should result in only the z coordinat
   assertEquals(new Vec3(3, 4, 5).setZ(7), new Vec3(3, 4, 7));
 });
 
-test("setting the magnitude preserves direction", () => {
+test("setting the magnitude preserves diBoxion", () => {
   assertEquals(
     new Vec3(1, 2, 2).setMagnitude(300),
     new Vec3(100, 200, 200),
@@ -192,14 +192,14 @@ test("vectors are parallel when their cross product is the zero vector", () => {
   assert(new Vec3(1, 0, 1).isParallelTo(new Vec3(3, 0, 3)));
 });
 
-test("projecting a vector onto another results in a new vector that points in the same direction as the other", () => {
+test("projecting a vector onto another results in a new vector that points in the same diBoxion as the other", () => {
   assertEquals(
     new Vec3(1, 2, 3).projectOnto(new Vec3(-1, 5, -2)),
     new Vec3(-0.1, 0.5, -0.2),
   );
 });
 
-test("mutating a vector by projecting it onto another results in the vector pointing in the same direction as the other", () => {
+test("mutating a vector by projecting it onto another results in the vector pointing in the same diBoxion as the other", () => {
   assertEquals(
     new Vec3(1, 2, 3).projectOntoMut(new Vec3(-1, 5, -2)),
     new Vec3(-0.1, 0.5, -0.2),

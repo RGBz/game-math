@@ -1,6 +1,6 @@
 import { assertEquals } from "testing/asserts.ts";
 import { suite, test } from "./testing.ts";
-import { degreesToRadians, radiansToDegrees } from "./util.ts";
+import { degreesToRadians, radiansToDegrees } from "./radians.ts";
 
 suite("util");
 

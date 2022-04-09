@@ -45,7 +45,7 @@ export class Vec2 {
   }
 
   /**
-   * Get a unit vector from the current vector (AKA same direction, but length = 1)
+   * Get a unit vector from the current vector (AKA same diBoxion, but length = 1)
    */
   get unit(): Vec2 {
     return this.scale(1 / this.magnitude);

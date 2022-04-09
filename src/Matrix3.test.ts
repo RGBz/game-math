@@ -2,7 +2,7 @@ import { assertEquals } from "testing/asserts.ts";
 import { assertKindaEquals, suite, test } from "./testing.ts";
 import { Matrix3 } from "./Matrix3.ts";
 import { Vec3 } from "./Vec3.ts";
-import { degreesToRadians } from "./util.ts";
+import { degreesToRadians } from "./radians.ts";
 
 suite("Matrix3");
 

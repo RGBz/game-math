@@ -48,14 +48,14 @@ test("multiplying by a matrix results in a new point that is the linear combinat
   );
 });
 
-test("the distance squared between vectors is the magnitude squared of their difference", () => {
+test("the distance squared between points is the magnitude squared of their difference", () => {
   assertEquals(
     new Point3(10, 10, 10).distanceToSquared(new Point3(9, 8, 8)),
     9,
   );
 });
 
-test("the distance between vectors is the magnitude of their difference", () => {
+test("the distance between points is the magnitude of their difference", () => {
   assertEquals(new Point3(10, 10, 10).distanceTo(new Point3(9, 8, 8)), 3);
 });
 
